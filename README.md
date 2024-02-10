@@ -1,6 +1,8 @@
 # Technical Blog Platform
 
-Welcome to the repository of our Technical Blog Platform, a modern, full-stack application designed to share technical knowledge and insights. The backend is powered by Node.js, ensuring efficient server-side operations, while the frontend leverages React with Vite and TypeScript, offering a responsive, type-safe, and fast-loading user experience.
+Welcome to the repository of our Technical Blog Platform, a modern, full-stack application designed to share technical knowledge and insights. The backend is powered by Node.js, 
+ensuring efficient server-side operations, while the frontend leverages React with Vite and TypeScript, 
+offering a responsive, type-safe, and fast-loading user experience.
 
 ## Features
 
@@ -25,5 +27,4 @@ These instructions will get you a copy of the project up and running on your loc
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/technical-blog-platform.git
-cd technical-blog-platform
+git clone https://github.com/MahmoudHassan77/Tech-Blog.git
