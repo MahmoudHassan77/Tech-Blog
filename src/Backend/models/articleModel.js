@@ -1,8 +1,5 @@
-// Article.js
-
 const mongoose = require("mongoose");
 
-// Define the schema for the article
 const articleSchema = new mongoose.Schema(
   {
     title: {
@@ -14,7 +11,8 @@ const articleSchema = new mongoose.Schema(
       required: true,
     },
     author: {
-      type: String,
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
       required: true,
     },
     category: {
@@ -51,21 +49,41 @@ const articleSchema = new mongoose.Schema(
       default: 0,
     },
     cover: String,
+    images: {
+      type: Array,
+    },
     comments: [
       {
         text: String,
-        postedBy: String,
+        postedBy: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+          required: true,
+        },
         postedAt: {
           type: Date,
           default: Date.now,
         },
+        replies: [
+          {
+            text: String,
+            postedBy: {
+              type: mongoose.Schema.ObjectId,
+              ref: "User",
+              required: true,
+            },
+            postedAt: {
+              type: Date,
+              default: Date.now,
+            },
+          },
+        ],
       },
     ],
   },
   { timestamps: true }
 );
 
-// Create a model from the schema
 const Article = mongoose.model("Article", articleSchema);
 
 module.exports = Article;
