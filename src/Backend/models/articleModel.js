@@ -84,6 +84,37 @@ const articleSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Article = mongoose.model("Article", articleSchema);
+articleSchema.pre(["find", "findOne"], function (next) {
+  this.populate("comments.postedBy", "name");
+  this.populate("comments.replies.postedBy", "name");
+  next();
+});
 
+const setImageUrl = (doc) => {
+  // return image baseURL + image name
+  if (doc.cover) {
+    const imageUrl = `${process.env.BASE_URL}/articles/${doc.cover}`;
+    doc.cover = imageUrl;
+  }
+  if (doc.images) {
+    const images = [];
+    doc.images.forEach((image) => {
+      const imageUrl = `${process.env.BASE_URL}/articles/${image}`;
+      images.push(imageUrl);
+      const imgOldName = image.split("-")[1];
+      doc.content.replace(imgOldName, imageUrl);
+    });
+    doc.images = images;
+  }
+};
+
+articleSchema.post("init", (doc) => {
+  setImageUrl(doc);
+});
+
+articleSchema.post("save", (doc) => {
+  setImageUrl(doc);
+});
+
+const Article = mongoose.model("Article", articleSchema);
 module.exports = Article;
