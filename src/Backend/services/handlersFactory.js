@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const CustomError = require("../utils/customError");
 const ApiFeatures = require("../utils/apiFeatures");
+const StatusCodes = require("../utils/statusCodes");
 
 exports.DeleteOne = (Model) =>
   asyncHandler(async (req, res, next) => {
@@ -9,7 +10,7 @@ exports.DeleteOne = (Model) =>
     if (!item)
       return next(new CustomError(`Item with id: ${id} is not found`, 400));
 
-    res.status(200).json({ status: "success" });
+    res.status(StatusCodes.Success).json({ status: "success" });
   });
 
 exports.UpdateOne = (Model) =>
@@ -22,7 +23,7 @@ exports.UpdateOne = (Model) =>
     if (!item) {
       return next(new CustomError(`Item with id: ${id} is not found`, 400));
     }
-    res.status(200).json({
+    res.status(StatusCodes.Success).json({
       status: "success",
       data: {
         item,
@@ -37,7 +38,7 @@ exports.GetOne = (Model) =>
     if (!item) {
       return next(new CustomError(`Item with id: ${id} is not found`, 400));
     }
-    res.status(200).json({
+    res.status(StatusCodes.Success).json({
       status: "success",
       data: {
         item,
@@ -48,7 +49,7 @@ exports.GetOne = (Model) =>
 exports.CreateOne = (Model) =>
   asyncHandler(async (req, res) => {
     const item = await Model.create(req.body);
-    res.status(200).json({ status: "success", data: { item } });
+    res.status(StatusCodes.Success).json({ status: "success", data: { item } });
   });
 
 exports.GetAll = (Model, searchFieldsNames) =>
@@ -66,7 +67,7 @@ exports.GetAll = (Model, searchFieldsNames) =>
     const { mongooseQuery, paginationResult } = apiFeature;
     const items = await mongooseQuery;
 
-    res.status(200).json({
+    res.status(StatusCodes.Success).json({
       status: "success",
       paginationResult,
       count: items.length,
