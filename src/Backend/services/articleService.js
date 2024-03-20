@@ -2,12 +2,11 @@ const asyncHandler = require("express-async-handler");
 const { v4: uuidv4 } = require("uuid");
 const factory = require("./handlersFactory");
 const ArticleModel = require("../models/articleModel");
-const CustomError = require("../utils/customError");
 const { calculateReadingTime } = require("../utils/readingTime");
 const { calculateFleschScoreFromHTML } = require("../utils/fleschScore");
 const { uploadMixOfImages } = require("../middlewares/uploadImageMiddleware");
 
-exports.uploadProductImage = uploadMixOfImages([
+exports.uploadArticleImage = uploadMixOfImages([
   {
     name: "cover",
     maxCount: 1,
@@ -18,7 +17,7 @@ exports.uploadProductImage = uploadMixOfImages([
   },
 ]);
 
-exports.resizeProductImages = asyncHandler(async (req, res, next) => {
+exports.resizeArticleImages = asyncHandler(async (req, res, next) => {
   // Image processing for image cover
   if (req.files.cover) {
     const imageCoverFileName = `article-${uuidv4()}-${Date.now()}-cover.jpeg`;
@@ -64,15 +63,15 @@ exports.calculateFleschScore = asyncHandler(async (req, res, next) => {
 // @desc    Create new article
 // @route   POST /api/v1/articles
 // @access  private
-exports.createProduct = factory.CreateOne(ArticleModel);
+exports.createArticle = factory.CreateOne(ArticleModel);
 
 // @desc    Get all articles
 // @route   GET /api/v1/articles?page=1&limit=10
 // @access  public
 const searchFieldsNames = ["title", "author", "category", "tags"];
-exports.getProducts = factory.GetAll(ArticleModel, searchFieldsNames);
+exports.getArticles = factory.GetAll(ArticleModel, searchFieldsNames);
 
 // @desc  Delete article by id
 // @route DELETE api/v1/articles/:id
 // @access private
-exports.deleteUserById = factory.DeleteOne(ArticleModel);
+exports.deleteArticleById = factory.DeleteOne(ArticleModel);

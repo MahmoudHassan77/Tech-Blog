@@ -11,7 +11,7 @@ const dbConnection = require("./config/database");
 const userRoute = require("./routes/userRoute");
 const googleAuthRouter = require("./routes/googleAuthRoute");
 const authRoute = require("./routes/authRoute");
-// const articleRoute = require("./routes/articleRouter");
+const articleRoute = require("./routes/articleRouter");
 
 dbConnection();
 const app = express();
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "development") app.use(logger("dev"));
 app.use(googleAuthRouter);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/auth", authRoute);
-// app.use("/api/v1/articles", articleRoute);
+app.use("/api/v1/articles", articleRoute);
 
 app.use("/", (req, res, next) => {
   res.send("Hello World!");
