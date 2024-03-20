@@ -75,3 +75,12 @@ exports.getArticles = factory.GetAll(ArticleModel, searchFieldsNames);
 // @route DELETE api/v1/articles/:id
 // @access private
 exports.deleteArticleById = factory.DeleteOne(ArticleModel);
+
+exports.increaseArticleViews = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const article = await ArticleModel.findById(id);
+  article.views += 1;
+  await article.save();
+});
+
+exports.getArticleById = factory.GetOne(ArticleModel);
