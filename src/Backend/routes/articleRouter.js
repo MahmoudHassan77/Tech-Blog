@@ -13,13 +13,14 @@ const {
   createArticle,
   calculateFleschScore,
   deleteArticleById,
+  getArticleById,
 } = require("../services/articleService");
 
 const router = express.Router();
 
 router
   .route("/")
-  .get(authService.allowTo("admin", "manager"), getArticles)
+  .get(getArticles)
   .post(
     authService.allowTo("admin"),
     createArticleValidator,
@@ -32,7 +33,7 @@ router
 
 router
   .route("/:id")
-  // .get(authService.allowTo("admin"), getOrDeleteArticleByIdValidator, getUserById)
+  .get(getOrDeleteArticleByIdValidator, getArticleById)
   .put(
     authService.allowTo("admin"),
     updateArticleValidator,
@@ -47,3 +48,5 @@ router
     getOrDeleteArticleByIdValidator,
     deleteArticleById
   );
+
+module.exports = router;
