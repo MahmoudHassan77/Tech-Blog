@@ -14,6 +14,8 @@ const {
   calculateFleschScore,
   deleteArticleById,
   getArticleById,
+  increaseArticleViews,
+  updateArticle,
 } = require("../services/articleService");
 
 const router = express.Router();
@@ -33,7 +35,7 @@ router
 
 router
   .route("/:id")
-  .get(getOrDeleteArticleByIdValidator, getArticleById)
+  .get(getOrDeleteArticleByIdValidator, increaseArticleViews, getArticleById)
   .put(
     authService.allowTo("admin"),
     updateArticleValidator,
@@ -41,7 +43,7 @@ router
     resizeArticleImages,
     calculateReadingTime,
     calculateFleschScore,
-    createArticle // TODO don't forget to change this route
+    updateArticle
   )
   .delete(
     authService.allowTo("admin"),
