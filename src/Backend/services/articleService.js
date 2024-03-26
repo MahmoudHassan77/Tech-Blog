@@ -84,3 +84,8 @@ exports.increaseArticleViews = asyncHandler(async (req, res, next) => {
 });
 
 exports.getArticleById = factory.GetOne(ArticleModel);
+
+// @desc    Update new article
+// @route   POST /api/v1/articles
+// @access  private
+exports.updateArticle = factory.UpdateOne(ArticleModel);
